@@ -55,6 +55,18 @@ export const MyTimePage = () => {
   const getDayComponent = (day: string) => {
     const colorIndex = -1;
     const freeHours = tasks[day]?.freeHrsOfDay;
+    const date = new Date();
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDay = weekdays[date.getDay()];
+    const dayOfMonth = date.getDate();
+    let suffix = "th";
+    if (dayOfMonth === 1 || dayOfMonth === 21 || dayOfMonth === 31) {
+      suffix = "st";
+    } else if (dayOfMonth === 2 || dayOfMonth === 22) {
+      suffix = "nd";
+    } else if (dayOfMonth === 3 || dayOfMonth === 23) {
+      suffix = "rd";
+    }
     return (
       <div key={day} className={`MyTime_day-${darkModeStatus ? "dark" : "light"}`}>
         <button
@@ -65,7 +77,7 @@ export const MyTimePage = () => {
             handleShowTasks(day);
           }}
         >
-          <h3 className="MyTime_dayTitle"> {day === "Today" ? `My ${new Date().toDateString()}` : day}</h3>
+          <h3 className="MyTime_dayTitle"> {day === "Today" ? `${currentDay} ${dayOfMonth}${suffix}` : day}</h3>
           <button
             className={`MyTime-expand-btw${darkModeStatus ? "-dark" : ""}`}
             type="button"
